@@ -57,7 +57,7 @@ So Add in your ~/.bashrc if not exist...
 #### TODO
 * Check sums for dowloaded snaps
 * Make a deal with .desktop entries
-* sound and fix bugs
+* found and fix bugs
 
 
 #### CANT DO
