@@ -34,6 +34,9 @@ You should never run snap command via sudo or any root access. snapV is desinged
 
 This way as user you can install or unistall snapv it self, also  install, remove  snaps and ALL other snap commands that provided. 
 
+Also `snap refresh` command do not upgrade all installed snap packages. In snapV must be followed by package_name`snap refresh <package>` and only check if package update exist upstream.
+If so user command `snap install <package>` to upgrade it. 
+
 
 
 ### Uninstall 
