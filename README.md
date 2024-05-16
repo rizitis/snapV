@@ -45,7 +45,7 @@ This way as user you can install or unistall snapv it self, also  install, remov
 
 Slackware64 user just run the sysV.SlackBuild as **regular user** and follow the `tar -xf` command which will be printed in terminal'\s output. 
 
-For other Linux systems just install the snapv/ folder in `~/.local/bin/` and the snap script also.  
+For other Linux systems just install the [snapv](https://github.com/rizitis/snapV/tree/main/snapv) folder in `~/.local/bin/` and the [snap script](https://github.com/rizitis/snapV/blob/main/snap) also.  
 Your path should be like this: `~/.local/bin/{snap,snapv}`
 
 In any case a modification in ~/.bashrc needed to export path.
