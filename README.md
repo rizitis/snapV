@@ -62,7 +62,7 @@ So Add in your ~/.bashrc if not exist...
 
 #### CANT DO
 - I cant fix (alone) a special problem: Some snaps had different snap_name than executable_name.  
-Example skype. To install it you must command `snap install skype` BUT for run it `snap start skypeforlinux` . Well I cant be a prophet and I m not so good programmer to fix this. In case you found more snaps with the exaclty problem (which means they installed ok but not run...) You must fix it locally. 
+Example skype. To install it you must command `snap install skype` BUT for run it `snap start skypeforlinux` . Well I cant be a prophet and I m not so good programmer to fix this. In case you found more snaps with the exactly problem (which means they installed ok but not run...) You must fix it locally. 
 
 Navigate to `~/.local/bin/snapv/snaps/$package_name` found the folder which contains the executable (skypeforlinux) and rename it as snap_name during installation (skype)
 Sorry so far I cant find a more robust fix... 
