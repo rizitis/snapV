@@ -1,0 +1,58 @@
+This is snap command for Slackware and SysVinit.
+It is written from scratch so can interact a Slackware system with the officially Snap Store.
+In theory it will work in any non systemd linux system. 
+NOTE: If you are in a systemd system then ofcource the best and correct choice is the official snap command and snapv daemon.
+
+Terms of Service snap-store
+======
+
+Before use Snap Store PLEASE READ Terms of Service and following  link:
+https://ubuntu.com/legal/terms-and-policies/snap-store-terms?_ga=2.111912706.78657110.1715710464-742068417.1715710464
+
+Valid since October 2020
+
+These Terms of Service cover your use of the Snap Store as provided by Canonical Group Limited registered in England, company number 110334C (“Canonical”, “us”, “we” or “our”).
+
+Please read these terms carefully before you use the Snap Store or create a Snap Store account. By using the Snap Store or registering for an account, you agree to be bound by these terms.
+
+If you register for a Snap Store account on behalf of an entity, you represent that you have authority to bind such entity to these terms.
+
+You must be at least 13 years old to use the Snap Store. If you are aged between 13 and 18, we require your parent’s or legal guardian’s consent to create a Snap Store account or use the Snap Store. Please contact us at legal@canonical.com. 
+
+https://ubuntu.com/legal/terms-and-policies/snap-store-terms?_ga=2.111912706.78657110.1715710464-742068417.1715710464
+
+INFO
+=====
+
+For now only terminal commands supported in snapV else 
+If we mix packages.desktop entries in /usr/share/applications in case of 2 same package installation (one snap and one build-install or installed from package manager); then Huston we really have problem...
+
+HOWTO
+=====
+
+To list all available Commands:
+$ snap help
+
+Note:
+ROOT ACCESS NOT NEEDED.
+You MUST build and install snapV as regular USER.
+
+Configs
+=======
+Add in your ~/.bashrc if not exist...
+export PATH="/home/$USER/.local/bin:$PATH" 
+
+This way you:
+1) can use snap even in systems with shared $USER/$HOME 
+2) can install, refresh, start snap packages more secure and never touch your system files. 
+
+TODO
+====
+* check sums for downloaded snap packages.
+* create valid desktop entries for snap packages.
+* test it an fix bugs
+* the main problem is when a snap package is named foo but the executable is named foo123oof, an example is skype. 
+- For installation you command $ snap install skype. But the binary is named skypeforlinux...
+- In such cases $ snap start foo  it might fail. Well this is something you must fix it alone for now.
+- To fix it I use as example skype: just rename in ~/.local/bin/snapv/snaps/<package_name>/SOME_bin_FOLDER/skypeforlinux --> ~/.local/bin/snapv/snaps/<package_name>/SOME_bin_FOLDER/skype
+

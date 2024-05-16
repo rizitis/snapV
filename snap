@@ -1,0 +1,141 @@
+#!/bin/bash
+
+
+RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[0;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m'
+    
+
+if [ "$EUID" -eq 0 ]; then
+    echo -e "${RED}snapV should not be build, install, uninstall, run, etc... with root privileges.${NC} Exiting."
+    exit 1
+fi
+
+
+install() {
+    local package="$1"
+python3 /home/$USER/.local/bin/snapv/scripts/snap-install.py "$package"
+}
+
+remove() {
+    local package="$1"
+bash /home/$USER/.local/bin/snapv/scripts/snap-remove.sh "$package"
+}
+
+list() {
+bash /home/$USER/.local/bin/snapv/scripts/snap-list.sh
+}
+
+refresh() {
+    local package="$1"
+python3 /home/$USER/.local/bin/snapv/scripts/snap-refresh.py "$package"
+}
+
+find() {
+    local package="$1"
+python3 /home/$USER/.local/bin/snapv/scripts/snap-find.py "$package"
+}
+
+info() {
+    local package="$1"
+python3 /home/$USER/.local/bin/snapv/scripts/snap-info.py "$package"
+}
+
+disable() {
+    local package="$1"
+bash /home/$USER/.local/bin/snapv/scripts/snap-disable.sh "$package"
+}
+
+enable() {
+    local package="$1"
+bash /home/$USER/.local/bin/snapv/scripts/snap-enable.sh "$package"
+}
+
+
+start() {
+    local package="$1"
+LD_LIBRARY_PATH=/home/$USER/.local/bin/snapv/snaps/$package/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib:/home/omen/.local/bin/snapv/snaps/tvheadend/usr/lib/x86_64-linux-gnu bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
+}
+
+my() {
+    local package="$1"
+bash /home/$USER/.local/bin/snapv/scripts/snap-my.sh "$package"
+}
+
+
+help() {
+    echo -e "${BLUE} The snap command lets you install, refresh, and remove snaps.${NC}"
+    echo -e "${BLUE} Snaps are packages that work across many different Linux distributions,${NC}"
+    echo -e "${BLUE} enabling secure delivery and operations of latest apps and utilities.${NC}"
+    echo -e "${BLUE} This is a fork of snap command, specially for Slackware linux and SysVinit.${NC}"
+    echo ""
+    echo -e "${GREEN}Usage: snap <command> [<package>]${NC}"
+    echo -e "${YELLOW}Commands:${NC}"
+    echo -e "  ${YELLOW}install <package>${NC}  - Install a Snap package"
+    echo -e "  ${YELLOW}remove <package>${NC}   - Remove a Snap package"
+    echo -e "  ${YELLOW}list${NC}               - List all installed Snap packages"
+    echo -e "  ${YELLOW}refresh <package>${NC}  - Upgrade a Snap package"
+    echo -e "  ${YELLOW}find <something>${NC}   - List all Snap-Repo packages related to something, example:"
+    echo -e "     ${BLUE}snap find music${NC} - List all available packages for music category"
+    echo -e " "
+    echo -e "  ${YELLOW}info <package>${NC}     - Display info about a Snap package"
+    echo -e "  ${YELLOW}disable <package>${NC}  - Disable a Snap package"
+    echo -e "  ${YELLOW}enable <package>${NC}   - Enable a Snap package"
+    echo -e "  ${YELLOW}start <package>${NC}    - Start a Snap app "
+    echo -e "  ${YELLOW}my <package>${NC}       - Print description if package installed"
+    echo -e "  ${YELLOW}explore${NC}            - Print all available Snap packages (more than 6.500 packages)"
+    echo -e "  ${BLUE}help${NC}               - Display this help message"
+    echo -e "  ${RED}uninstall          - Uninstall snapV and delete all snap installed packages "
+    echo ""
+    echo ""
+}
+
+explore(){
+python3 /home/$USER/.local/bin/snapv/scripts/snap-explore.py
+}
+
+uninstall(){
+bash /home/$USER/.local/bin/snapv/scripts/uninstall-snap.sh
+}
+
+main() {
+    if [ $# -eq 0 ]; then
+        help
+        exit 1
+    fi
+
+    local command="$1"
+    local package="$2"
+    
+    case "$command" in
+        install|remove|refresh|find|info|disable|enable|start|my)
+            if [ -z "$package" ]; then
+                echo "OPS...ERROR: $command command requires <package> argument."
+                echo ""
+                help
+                exit 1
+            fi
+            ;;
+    esac
+
+    case "$command" in
+        install) install "$package" ;;
+        remove) remove "$package" ;;
+        list) list ;;
+        refresh) refresh "$package" ;;
+        find) find "$package" ;;
+        info) info "$package" ;;
+        disable) disable "$package" ;;
+        enable) enable "$package" ;;
+        start) start "$package" ;;
+        my) my "$package" ;;
+        explore) explore ;;
+        uninstall) uninstall ;;
+        help) help ;;
+        *) echo "Unknown command: $command"; help ;;
+    esac
+}
+
+main "$@"

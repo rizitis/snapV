@@ -1,0 +1,44 @@
+# snapV
+
+snapV is free and open-source project written from scratch that provides official Snap-Store packages for the Slackware Linux distribution and others...
+
+
+### Third-Party Libraries and Tools and Terms of Service
+
+- Snapcraft (https://snapcraft.io/) - Used for building Snap packages
+- Maintained by Canonical Ltd.
+
+-The Snap Store - Provides a place to upload snaps, and for users to browse and install the software they want.
+
+Snap Store Terms of Service
+
+These Terms of Service cover your use of the Snap Store as provided by Canonical Group Limited registered in England, company number 110334C (“Canonical”, “us”, “we” or “our”).
+
+Please read these terms carefully before you use the Snap Store or create a Snap Store account. By using the Snap Store or registering for an account, you agree to be bound by these terms.
+
+If you register for a Snap Store account on behalf of an entity, you represent that you have authority to bind such entity to these terms.
+
+You must be at least 13 years old to use the Snap Store. If you are aged between 13 and 18, we require your parent’s or legal guardian’s consent to create a Snap Store account or use the Snap Store. Please contact us at legal@canonical.com. 
+
+https://ubuntu.com/legal/terms-and-policies/snap-store-terms?_ga=2.111912706.78657110.1715710464-742068417.1715710464
+
+
+### Inspiration
+
+- Slackware Linux (https://www.slackware.com/) 
+- Snapcraft Documentation (https://snapcraft.io/docs) 
+- Our folks from AUR (https://aur.archlinux.org)
+
+## License
+
+This project is licensed under the MIT License
+
+
+Copyright 2024 Anagnostakis Ioannis GR (aka rizitis)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
