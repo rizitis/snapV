@@ -32,7 +32,7 @@ Examples:
 
 You should never run snap command via sudo or any root access. snapV is disined for regullar user mode.   
 
-This way as user you can install or unistall it self, also  install, remove  snaps and ALL other snap commands that provided. 
+This way as user you can install or unistall snapv it self, also  install, remove  snaps and ALL other snap commands that provided. 
 
 
 
