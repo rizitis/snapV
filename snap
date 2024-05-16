@@ -56,7 +56,7 @@ bash /home/$USER/.local/bin/snapv/scripts/snap-enable.sh "$package"
 
 start() {
     local package="$1"
-LD_LIBRARY_PATH=/home/$USER/.local/bin/snapv/snaps/$package/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib:/home/omen/.local/bin/snapv/snaps/tvheadend/usr/lib/x86_64-linux-gnu bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
+LD_LIBRARY_PATH=/home/$USER/.local/bin/snapv/snaps/$package/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib:/home/omen/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
 }
 
 my() {
