@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+snap: snap (snap-slackware cli tool for Snap-Store packages)
+snap:
+snap: snap-slackware is written from scratch to act almost like snap.
+snap: You can install, refresh, remove, enable, disable snap packages from 
+snap: officiall snap-storen in a Slackware64 system.
+snap: 
+snap: Command (snap help) for listing all snap commands.
+snap: NOTE: Dont use (su -c or sudo), root access is unneeded. 
+
+snap: HomePage: https://github.com/rizitis/snapV
+snap:
