@@ -1,0 +1,4 @@
+Here stored some fake libs if needed. 
+Example: one snap is missing one lib (yes this happens rearly or need a system lib for a specific version.)
+You can found the lib-version.so* files and place them here and your system will be safe... 
+This path is already included in LD_PATH for snapV. Only place libs here and thats all. 

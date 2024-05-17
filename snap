@@ -63,6 +63,7 @@ start() {
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu"
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64"
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib64"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/fake_lib64"
     
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH"  bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
 }
