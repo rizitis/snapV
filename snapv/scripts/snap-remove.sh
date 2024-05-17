@@ -15,7 +15,8 @@ FILES_DIRS="/home/$USER/.local/bin/snapv"
 if [ -d "$snap_dir" ]; then
     # Remove the package from the regular directory
     rm -rf "$snap_dir"
-    rm "$FILES_DIRS/{version,desc}/$package.txt"
+    rm "$FILES_DIRS/version/$package.txt"
+    rm "$FILES_DIRS/desc/$package.txt"
     exit 0
 fi
 
