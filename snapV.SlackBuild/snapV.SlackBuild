@@ -38,7 +38,7 @@ fi
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=snapV
-VERSION=${VERSION:-1.0.alpha}
+VERSION=${VERSION:-1.0.beta}
 BUILD=${BUILD:-3}
 TAG=${TAG:-_snap}
 PKGTYPE=${PKGTYPE:-txz}
