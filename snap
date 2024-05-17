@@ -56,7 +56,15 @@ bash /home/$USER/.local/bin/snapv/scripts/snap-enable.sh "$package"
 
 start() {
     local package="$1"
-LD_LIBRARY_PATH=/home/$USER/.local/bin/snapv/snaps/$package/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib:/home/omen/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
+# Construct the LD_LIBRARY_PATH
+    LD_LIBRARY_PATH="/home/$USER/.local/bin/snapv/snaps/$package/lib"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib64"
+    
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH"  bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
 }
 
 my() {
