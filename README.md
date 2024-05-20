@@ -23,7 +23,7 @@ Examples:
 + `snap my <package> `  - Print package desc description if package installed
 * `snap help`  - Display info for all snap commands
 
-![snap help](https://github.com/rizitis/snapV/blob/main/snap_help.png?raw=true)
+![snap help](https://github.com/rizitis/snapV/blob/main/snap_help1.png?raw=true)
 
 *Althought snapV is written from sratch if you explore via browser in snap store and you want to install a snap you can follow ubuntu commands.*
 *It work in the same therory :* `$ snap install package_name`
