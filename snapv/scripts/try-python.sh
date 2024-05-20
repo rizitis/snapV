@@ -7,7 +7,6 @@ if [ $# -ne 1 ]; then
 fi
 
 package="$1"
-
 # Determine the directory associated with the Snap package
 snap_dir="/home/$USER/.local/bin/snapv/snaps/$package"
 
@@ -24,14 +23,21 @@ if [ ! -d "$snap_dir" ]; then
     fi
 fi
 
-# Find the binary associated with the Snap package
-binary=$(find "$snap_dir" -type f -executable -name "$package")
+# Navigate to the snap directory
+cd "$snap_dir" || { echo "Error: Unable to navigate to directory $snap_dir"; exit 2; }
 
-# Check if the binary exists
-if [ -z "$binary" ]; then
-    source /home/$USER/.local/bin/snapv/scripts/try-python.sh $package &
-  else  
-  export_env_vars() {
+python_version1=$(find ./ -type d -name site-packages -exec dirname {} + | head -n 1)
+echo "$python_version1"
+echo "$python_version1" > "$snap_dir/print_python.txt"
+sed -i '1!d' "$snap_dir/print_python.txt"
+sed -i 's|.*/\(.*\)|\1|' "$snap_dir/print_python.txt" 
+
+# Read the Python version from the hack file
+pyvers=$(cat "$snap_dir/print_python.txt")
+echo "$pyvers"
+
+
+export_env_vars() {
     # Iterate over all directories in the Snap package directory
     for dir in $(find "$snap_dir" -type d); do
         # Extract the directory name
@@ -93,7 +99,17 @@ if [ -z "$binary" ]; then
         echo "Exporting variable: XDG_DATA_DIRS=$snap_dir/usr/share:$XDG_DATA_DIRS"
     fi
 
-    # Export FONTCONFIG_PATH for additional font directories
+    # Export XDG_CONFIG_DIRS for common config directories
+    if [ -d "$snap_dir/etc/xdg" ]; then
+        export XDG_CONFIG_DIRS="$snap_dir/etc/xdg:$XDG_CONFIG_DIRS"
+        echo "Exporting variable: XDG_CONFIG_DIRS=$snap_dir/etc/xdg:$XDG_CONFIG_DIRS"
+    fi
+    if [ -d "$snap_dir/usr/etc/xdg" ]; then
+        export XDG_CONFIG_DIRS="$snap_dir/usr/etc/xdg:$XDG_CONFIG_DIRS"
+        echo "Exporting variable: XDG_CONFIG_DIRS=$snap_dir/usr/etc/xdg:$XDG_CONFIG_DIRS"
+    fi
+    
+# Export FONTCONFIG_PATH for additional font directories
 if [ -d "$snap_dir/etc/fonts" ]; then
     export FONTCONFIG_PATH="$snap_dir/etc/fonts:$FONTCONFIG_PATH"
     echo "Exporting variable: FONTCONFIG_PATH=$snap_dir/etc/fonts:$FONTCONFIG_PATH"
@@ -111,12 +127,6 @@ if [ -f "$snap_dir/etc/fonts/fonts.conf" ]; then
     echo "Exporting variable: FONTCONFIG_FILE=$snap_dir/etc/fonts/fonts.conf"
 fi
 
-
-# Export FONTCONFIG_FILE to point to the Fontconfig configuration file
-if [ -f "$snap_dir/etc/fonts/fonts.conf" ]; then
-    export FONTCONFIG_FILE="$snap_dir/etc/fonts/fonts.conf"
-    echo "Exporting variable: FONTCONFIG_FILE=$snap_dir/etc/fonts/fonts.conf"
-fi
 
     # Export PERLLIB for common Perl library directories
     if [ -d "$snap_dir/lib/perl5" ]; then
@@ -195,11 +205,41 @@ fi
 
 # Call the function to export environment variables
 export_env_vars
-if [ "$UID" -eq 1000 ]; then
-    echo "UID is 1000. Proceed with running the app."
- env -u SESSION_MANAGER   "$binary" &
- else
-  env -u SESSION_MANAGER   "$binary" &
+
+# Find the file $package or $package.py in the current directory and all subdirectories
+found_files=$(find . -type f \( -name "$package" -o -name "$package.py" \))
+
+# Check if any files were found
+if [[ -n "$found_files" ]]; then
+  # Count the number of found files
+  file_count=$(echo "$found_files" | wc -l)
+  
+  if [[ "$file_count" -gt 1 ]]; then
+    echo "Found multiple files:"
+    echo "$found_files" | nl -w 2 -s '. ' # Print files with numbers for selection
+
+    # Ask user to choose a file
+    echo "Please enter the number of the file you want to run:"
+    read -r choice
+
+    # Get the selected file path
+    selected_file=$(echo "$found_files" | sed -n "${choice}p")
+
+    # Check if the selected file is valid
+    if [[ -n "$selected_file" ]]; then
+      echo "Running the selected file: $selected_file"
+"$snap_dir/usr/bin/python3" "$selected_file"
+    else
+      echo "Invalid selection."
+    fi
+  else
+    # Only one file found, run it
+    single_file=$(echo "$found_files")
+    echo "Found one file: $single_file"
+    echo "Running the file..."
+"$snap_dir/usr/bin/python3" "$single_file"
+  fi
+else
+  echo "No files named '$package' or '$package.py' found."
 fi
 
-fi

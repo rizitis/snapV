@@ -27,7 +27,7 @@ list_disabled_packages() {
         # Print header for disabled packages in red color
         echo -e "${RED}Disabled Snap packages:${NC}"
         # List directories in $disabled_dir and print in red color
-        find "$disabled_dir"/* -maxdepth 0 -type d -exec basename {} \; | sed -e "s/^/${RED}/" -e "s/$/${NC}/"
+        find "$disabled_dir"/* -maxdepth 0 -type d -exec basename {} \; | sed -e "s/^//" -e "s/$//"
     else
         echo "No disabled Snap packages."
     fi
@@ -36,4 +36,3 @@ list_disabled_packages() {
 # Call functions to list installed and disabled packages
 list_installed_packages
 list_disabled_packages
-
