@@ -23,9 +23,27 @@ if [ ! -d "$snap_dir" ]; then
         exit 2
     fi
 fi
+#cd "$snap_dir" || exit 6
 
 # Find the binary associated with the Snap package
 binary=$(find "$snap_dir" -type f -executable -name "$package")
+# Check if any files were found
+if [[ -n "$binary" ]]; then
+  # Count the number of found files
+  file_count=$(echo "$binary" | wc -l)
+  
+  if [[ "$file_count" -gt 1 ]]; then
+    echo "Found multiple files:"
+    echo "$binary" | nl -w 2 -s '. ' # Print files with numbers for selection
+
+    # Ask user to choose a file
+    echo "Please enter the number of the file you want to run:"
+    read -r choice
+
+    # Get the selected file path
+    selected_file=$(echo "$binary" | sed -n "${choice}p")
+fi
+fi
 
 # Check if the binary exists
 if [ -z "$binary" ]; then
@@ -195,11 +213,19 @@ fi
 
 # Call the function to export environment variables
 export_env_vars
+
+
+echo "$selected_file"
+parent_path=$(dirname "$selected_file")
+cd "$parent_path" || { echo "Failed to change directory to $parent_path"; exit 1; }
+
 if [ "$UID" -eq 1000 ]; then
     echo "UID is 1000. Proceed with running the app."
- env -u SESSION_MANAGER   "$binary" &
- else
-  env -u SESSION_MANAGER   "$binary" &
+   echo "trying trying exec_cmd" 
+exec "$package" & 
+else
+env -u SESSION_MANAGER  "$package" 
+echo "env did the job"
+fi
 fi
 
-fi

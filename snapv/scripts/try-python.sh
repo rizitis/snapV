@@ -207,7 +207,8 @@ fi
 export_env_vars
 
 # Find the file $package or $package.py in the current directory and all subdirectories
-found_files=$(find . -type f \( -name "$package" -o -name "$package.py" \))
+found_files=$(find ./ -type f \( -name "$package" -o -name "$package.py" \))
+
 
 # Check if any files were found
 if [[ -n "$found_files" ]]; then
@@ -228,7 +229,7 @@ if [[ -n "$found_files" ]]; then
     # Check if the selected file is valid
     if [[ -n "$selected_file" ]]; then
       echo "Running the selected file: $selected_file"
-"$snap_dir/usr/bin/python3" "$selected_file"
+      "$snap_dir/usr/bin/python3" "$selected_file"
     else
       echo "Invalid selection."
     fi
@@ -237,9 +238,36 @@ if [[ -n "$found_files" ]]; then
     single_file=$(echo "$found_files")
     echo "Found one file: $single_file"
     echo "Running the file..."
-"$snap_dir/usr/bin/python3" "$single_file"
+    "$snap_dir/usr/bin/python3" "$single_file"
   fi
 else
-  echo "No files named '$package' or '$package.py' found."
+  # If no files were found in the initial search, try other locations
+  found_files=$(find ./bin -type f -name "$package")
+  
+  if [[ -z "$found_files" ]]; then
+    # No files found in ./bin, try other directories
+    potential_files=(
+      "$snap_dir/bin/$package"
+      "$snap_dir/usr/bin/$package"
+      "$snap_dir/opt/$package"
+#      "$snap_dir"/
+    )
+    
+    for file in "${potential_files[@]}"; do
+      if [[ -f "$file" ]]; then
+        found_files="$file"
+        break
+      fi
+    done
+  fi
+
+  if [[ -n "$found_files" ]]; then
+    # Run the found file
+    echo "Running the file: $found_files"
+    "$snap_dir/usr/bin/python3" "$found_files"
+  else
+    echo "No files named '$package' found."
+  fi
 fi
+
 
