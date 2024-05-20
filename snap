@@ -13,7 +13,6 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
-
 install() {
     local package="$1"
 python3 /home/$USER/.local/bin/snapv/scripts/snap-install.py "$package"
@@ -53,19 +52,34 @@ enable() {
 bash /home/$USER/.local/bin/snapv/scripts/snap-enable.sh "$package"
 }
 
-
-start() {
+run() {
     local package="$1"
-# Construct the LD_LIBRARY_PATH
+
+#    # Construct the LD_LIBRARY_PATH
     LD_LIBRARY_PATH="/home/$USER/.local/bin/snapv/snaps/$package/lib"
-    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib"
-    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib"
+#    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib"
+#    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/share/lib"
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu"
-    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64"
-    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib64"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package/lib/x86_64-linux-gnu"
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/fake_lib64"
+#    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USER/.local/bin/snapv/snaps/$package"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/omen/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu/pulseaudio"
+   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/omen/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu/gnome-software"
+
+#export PYTHONPATH=${PYTHONPATH}:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/python310.zip:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/python3.10:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/python3.10/lib-dynload:/home/$USER/.local/bin/snapv/snaps/$package/usr/libpython3/dist-packages:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/python3.10/site-packages
+
+# comment it(them) if needed.
+    QT_QPA_PLATFORM_PLUGIN_PATH="/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu/qt5/plugins"
     
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH"  bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
+    export ETC_PATH="/home/$USER/.local/bin/snapv/snaps/$package/etc"
+ # LD_PRELOAD="/usr/lib64/libstdc++.so.6"
+# LD_PRELOAD="$LD_PRELOAD:/home/$USER/.local/bin/snapv/snaps/$package/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+#LD_PRELOAD="$LD_PRELOAD:/home/omen/.local/bin/snapv/snaps/vlc/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so"
+#export LD_PRELOAD="$LD_PRELOAD"
+#export MESA_LOADER_DRIVER_OVERRIDE="/home/omen/.local/bin/snapv/snaps/vlc/usr/lib/x86_64-linux-gnu/dri/iris_dri.so"
+# QT_QPA_PLATFORM_PLUGIN_PATH="$QT_QPA_PLATFORM_PLUGIN_PATH"  
+
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH" QT_QPA_PLATFORM_PLUGIN_PATH="$QT_QPA_PLATFORM_PLUGIN_PATH" ETC_PATH="$ETC_PATH"  bash /home/$USER/.local/bin/snapv/scripts/snap-start.sh "$package"
 }
 
 my() {
@@ -92,7 +106,7 @@ help() {
     echo -e "  ${YELLOW}info <package>${NC}     - Display info about a Snap package"
     echo -e "  ${YELLOW}disable <package>${NC}  - Disable a Snap package"
     echo -e "  ${YELLOW}enable <package>${NC}   - Enable a Snap package"
-    echo -e "  ${YELLOW}start <package>${NC}    - Start a Snap app "
+    echo -e "  ${YELLOW}run <package>${NC}    - Start a Snap app "
     echo -e "  ${YELLOW}my <package>${NC}       - Print description if package installed"
     echo -e "  ${YELLOW}explore${NC}            - Print all available Snap packages (more than 6.500 packages)"
     echo -e "  ${BLUE}help${NC}               - Display this help message"
@@ -119,7 +133,7 @@ main() {
     local package="$2"
     
     case "$command" in
-        install|remove|refresh|find|info|disable|enable|start|my)
+        install|remove|refresh|find|info|disable|enable|run|my)
             if [ -z "$package" ]; then
                 echo "OPS...ERROR: $command command requires <package> argument."
                 echo ""
@@ -138,7 +152,7 @@ main() {
         info) info "$package" ;;
         disable) disable "$package" ;;
         enable) enable "$package" ;;
-        start) start "$package" ;;
+        run) run "$package" ;;
         my) my "$package" ;;
         explore) explore ;;
         uninstall) uninstall ;;
