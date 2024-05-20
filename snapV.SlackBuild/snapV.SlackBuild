@@ -86,7 +86,7 @@ IN_DIR=".local/bin"
 mkdir -p $PKG/"$IN_DIR"/snapv
 install -m 700 snap $PKG/"$IN_DIR"/
 mv snapv/* -t $PKG/"$IN_DIR"/snapv/
-chmod -R 700 "$PKG"/"$IN_DIR"/snapv
+chmod -R 755 "$PKG"/"$IN_DIR"/snapv/snaps
 
 
 mkdir -p $PKG/$IN_DIR/snapv/doc/$PRGNAM-$VERSION
