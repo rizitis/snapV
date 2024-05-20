@@ -43,7 +43,7 @@ export PATH="/home/$USER/.local/bin:$PATH"
 
 This way you:
 1) can use snap even in systems with shared $USER/$HOME 
-2) can install, refresh, start snap packages more secure and never touch your system files. 
+2) can install, refresh, run snap packages more secure and never touch your system files. 
 
 TODO
 ====
@@ -52,6 +52,6 @@ TODO
 * test it an fix bugs
 * the main problem is when a snap package is named foo but the executable is named foo123oof, an example is skype. 
 - For installation you command $ snap install skype. But the binary is named skypeforlinux...
-- In such cases $ snap start foo  it might fail. Well this is something you must fix it alone for now.
+- In such cases $ snap run foo  it might fail. Well this is something you must fix it alone for now.
 - To fix it I use as example skype: just rename in ~/.local/bin/snapv/snaps/<package_name>/SOME_bin_FOLDER/skypeforlinux --> ~/.local/bin/snapv/snaps/<package_name>/SOME_bin_FOLDER/skype
 
