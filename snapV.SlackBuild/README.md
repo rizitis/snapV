@@ -16,7 +16,7 @@ Examples:
 -  `snap remove <package>` - Remove snap package from system.
 -  `snap refresh <package>` -  Check for new package version in snap-store.
 -  `snap find <query>` - List all avaliables packages related to query.
-+ `snap start <package>` -  Load service or app. 
++ `snap run <package>` -  Load service or app. 
 + `snap disable <package>` -  Disable package
 + `snap enable <package>` - Enable package
 + `snap info <package>` - Display info about a Snap package
