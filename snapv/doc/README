@@ -1,7 +1,7 @@
 This is snap command for Slackware and SysVinit.
 It is written from scratch so can interact a Slackware system with the officially Snap Store.
 In theory it will work in any non systemd linux system. 
-NOTE: If you are in a systemd system then ofcource the best and correct choice is the official snap command and snapv daemon.
+NOTE: If you are in a systemd system then ofcource the best and correct choice is the official snap command and snapd daemon.
 
 Terms of Service snap-store
 ======
