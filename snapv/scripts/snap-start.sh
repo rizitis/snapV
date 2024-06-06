@@ -8,6 +8,15 @@ fi
 
 package="$1"
 
+if [ "$package" = custom  ]; then
+ echo "WRONG COMMAND"
+ echo "JUST TYPE: snap custom"
+ sleep 2
+ echo ""
+  exit 2
+fi
+
+
 # Determine the directory associated with the Snap package
 snap_dir="/home/$USER/.local/bin/snapv/snaps/$package"
 
@@ -47,8 +56,11 @@ fi
 
 # Check if the binary exists
 if [ -z "$binary" ]; then
-    source /home/$USER/.local/bin/snapv/scripts/try-python.sh $package &
-  else  
+   bash "$package"
+else
+  source /home/$USER/.local/bin/snapv/scripts/try-python.sh $package & 
+  fi
+  
   export_env_vars() {
     # Iterate over all directories in the Snap package directory
     for dir in $(find "$snap_dir" -type d); do
@@ -65,6 +77,10 @@ if [ -z "$binary" ]; then
     if [ -d "$snap_dir/lib" ]; then
         export LD_LIBRARY_PATH="$snap_dir/lib:$LD_LIBRARY_PATH"
         echo "Exporting variable: LD_LIBRARY_PATH=$snap_dir/lib:$LD_LIBRARY_PATH"
+    fi
+    if [ -d "$snap_dir/lib/i386-linux-gnu" ]; then
+        export LD_LIBRARY_PATH="$snap_dir/lib/i386-linux-gnu:$LD_LIBRARY_PATH"
+        echo "Exporting variable: LD_LIBRARY_PATH=$snap_dir/lib/i386-linux-gnu:$LD_LIBRARY_PATH"
     fi
     if [ -d "$snap_dir/usr/lib" ]; then
         export LD_LIBRARY_PATH="$snap_dir/usr/lib:$LD_LIBRARY_PATH"
@@ -209,6 +225,7 @@ fi
         export GTK3_MODULES="$snap_dir/etc/gtk-3.0:$GTK3_MODULES"
         echo "Exporting variable: GTK3_MODULES=$snap_dir/etc/gtk-3.0:$GTK3_MODULES"
     fi
+    
 }
 
 # Call the function to export environment variables
@@ -222,10 +239,10 @@ cd "$parent_path" || { echo "Failed to change directory to $parent_path"; exit 1
 if [ "$UID" -eq 1000 ]; then
     echo "UID is 1000. Proceed with running the app."
    echo "trying trying exec_cmd" 
-exec "$package" & 
+bash "$package"
 else
-env -u SESSION_MANAGER  "$package" 
+env -u SESSION_MANAGER  "$package" & exec "$package" 
 echo "env did the job"
 fi
-fi
+
 
