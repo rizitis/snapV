@@ -52,6 +52,10 @@ enable() {
 bash /home/$USER/.local/bin/snapv/scripts/snap-enable.sh "$package"
 }
 
+custom(){
+bash /home/$USER/.local/bin/snapv/scripts/custom.sh
+}
+
 run() {
     local package="$1"
 
@@ -102,6 +106,7 @@ help() {
     echo -e "  ${YELLOW}refresh <package>${NC}  - Upgrade a Snap package"
     echo -e "  ${YELLOW}find <something>${NC}   - List all Snap-Repo packages related to something, example:"
     echo -e "     ${BLUE}snap find music${NC} - List all available packages for music category"
+    echo -e "  ${YELLOW}custom${NC}   -Change to desired snap_dir and use custom command to run a snap-package"
     echo -e " "
     echo -e "  ${YELLOW}info <package>${NC}     - Display info about a Snap package"
     echo -e "  ${YELLOW}disable <package>${NC}  - Disable a Snap package"
@@ -155,6 +160,7 @@ main() {
         run) run "$package" ;;
         my) my "$package" ;;
         explore) explore ;;
+        custom) custom ;;
         uninstall) uninstall ;;
         help) help ;;
         *) echo "Unknown command: $command"; help ;;
